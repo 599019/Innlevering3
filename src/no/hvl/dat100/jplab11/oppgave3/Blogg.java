@@ -2,49 +2,84 @@ package no.hvl.dat100.jplab11.oppgave3;
 
 import no.hvl.dat100.jplab11.common.TODO;
 import no.hvl.dat100.jplab11.oppgave1.*;
+import no.hvl.dat100.jplab11.oppgave2.Bilde;
+import no.hvl.dat100.jplab11.oppgave2.Tekst;
 
 public class Blogg {
 
-	// TODO: objektvariable 
+	private Innlegg[] innleggstabell;
+	private int nesteledige;
 
 	public Blogg() {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		innleggstabell = new Innlegg[20];
+		nesteledige=0;
 	}
 
 	public Blogg(int lengde) {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		innleggstabell = new Innlegg[lengde];
+		nesteledige=0;
 	}
 
 	public int getAntall() {
-		throw new UnsupportedOperationException(TODO.method());
+		return nesteledige;
 	}
 	
 	public Innlegg[] getSamling() {
-		throw new UnsupportedOperationException(TODO.method());
-
+		//Usikker på den
+		return innleggstabell;
 	}
 	
 	public int finnInnlegg(Innlegg innlegg) {
+		boolean funnet = false;
+		int pos = 0;
 
-		throw new UnsupportedOperationException(TODO.method());
+		while (pos < nesteledige && !funnet) {
+			if (innleggstabell[pos].erLik(innlegg)) {
+				funnet = true;
+			} else {
+				pos++;
+			}
+		}
+
+		if (funnet) {
+			return pos;
+		} else {
+			return -1;
+		}
 	}
 
 	public boolean finnes(Innlegg innlegg) {
-		throw new UnsupportedOperationException(TODO.method());
+		//Usikker på den
+		if (finnInnlegg(innlegg)<0){
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public boolean ledigPlass() {
-		throw new UnsupportedOperationException(TODO.method());
-
+		//Usikker
+		return nesteledige<innleggstabell.length;
 	}
 	
 	public boolean leggTil(Innlegg innlegg) {
+		boolean ny = finnInnlegg(innlegg) == -1;
 
-		throw new UnsupportedOperationException(TODO.method());
+		if (ny && ledigPlass()) {
+			innleggstabell[nesteledige] = innlegg;
+			nesteledige++;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public String toString() {
-		throw new UnsupportedOperationException(TODO.method());
+		String output = nesteledige + "\n";
+		for (int i = 0; i < nesteledige; i++) {
+			output += innleggstabell[i].toString();
+		}
+		return output;
 	}
 
 	// valgfrie oppgaver nedenfor
